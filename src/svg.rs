@@ -3,7 +3,7 @@ use std::fmt;
 use crate::style::*;
 
 pub struct Svg <'a>{
-    style: StyleList<'a>
+    style: &'a StyleList<'a>
 }
 
 impl<'a> fmt::Display for Svg<'a> {
@@ -15,8 +15,8 @@ impl<'a> fmt::Display for Svg<'a> {
 }
 
 impl <'a> Svg <'a>{
-    pub fn new(style: Vec<Style<'a>>) -> Self {
-        Self { style: StyleList(style) }
+    pub fn new(style: &'a StyleList) -> Self {
+        Self { style }
     }
 }
 
@@ -49,7 +49,7 @@ mod tests {
     }
     #[test]
     fn correct_output() {
-        let my_svg = Svg {style: "fill:#000".into()};
+        let my_svg = Svg {style: &"fill:#000".into()};
 
         assert_eq!(
             "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><svg>\n<defs/><g></g><inkscape:clipboard style=\"fill:#000;\" />\n</svg>",
