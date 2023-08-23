@@ -33,6 +33,12 @@ pub struct StyleList<'a> (
     pub Vec<Style<'a>> 
 );
 
+impl<'a> StyleList<'a> {
+    pub fn missing_param(&self) -> Option<&Style<'_>> {
+        self.iter().find(|&f| f.missing_param())
+    }
+}
+
 impl<'a> From<StyleList<'a>> for String {
     fn from(value: StyleList<'a>) -> Self {
         value.to_string()
@@ -52,10 +58,10 @@ impl<'a> Style<'a> {
     pub fn missing_param(&self) -> bool {
         self.style.is_none() || self.value.is_none()
     }
-    pub fn set(&self, param: &'a str) -> Style<'_> {
+    pub fn set(&self, param: &'a Style) -> Style<'a> {
         Style {
-            style: Some(self.style.unwrap_or(param)),
-            value: Some(self.value.unwrap_or(param)),
+            style: self.style.or(param.style),
+            value: self.value.or(param.value),
         }
     }
 }
@@ -115,12 +121,12 @@ mod tests {
     fn set() {
         let style = STYLE.clone();
         assert_eq!(
-            style.set("fill"),
+            style.set(&"fill".into()),
             Style { style: Some("fill"), value: Some("000") }
         );
 
         assert_eq!(
-            style.set("fill").set("paint"),
+            style.set(&"fill".into()).set(&"paint".into()),
             Style { style: Some("fill"), value: Some("000") }
         );
     }
