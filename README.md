@@ -14,7 +14,7 @@ style: stroke:#000000; stroke-width:2.6, stroke-dasharray:15.8;...
 ```
 
 The valid options are exemplified below. A key must either have a `style` or a `rebind_to`.
-
+```
 keybinds:
 - key: a
   style: stroke;stroke-width:2.64566929;stroke-dasharray:15.87401575,2.64566929;stroke-opacity:1;
