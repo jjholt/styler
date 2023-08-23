@@ -1,20 +1,20 @@
 use std::fmt;
 use serde::{Deserialize, Serialize};
 
-use crate::style::Style;
-
-#[derive(Debug, Deserialize, PartialEq, Serialize)]
-#[serde(untagged)]
-pub enum Action<'a> {
-    ApplyStyle(Style<'a>),
-    Rebind{rebind_to: &'a str}
-}
+use crate::style::StyleList;
 
 #[derive(Deserialize, Debug, PartialEq, Serialize)]
 pub struct Keybind<'a> {
     pub key: &'a str, 
     #[serde(flatten)]
     pub action: Action<'a>,
+}
+
+#[derive(Debug, Deserialize, PartialEq, Serialize)]
+#[serde(untagged)]
+pub enum Action<'a> {
+    Style{style: StyleList<'a>},
+    Rebind{rebind_to: &'a str},
 }
 
 #[derive(Deserialize, Serialize, PartialEq, Debug)]
@@ -35,7 +35,7 @@ impl<'a> Keybind<'a> {
 impl<'a> fmt::Display for Action<'a> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            Action::ApplyStyle(style) => write!(f, "{}", style),
+            Action::Style {style} => write!(f, "{}", style),
             Action::Rebind {rebind_to: key} => write!(f, "{}", key),
         }
     }
