@@ -33,6 +33,12 @@ pub struct StyleList<'a> (
     pub Vec<Style<'a>> 
 );
 
+impl<'a> From<Vec<Style<'a>>> for StyleList<'a> {
+    fn from(value: Vec<Style<'a>>) -> Self {
+        StyleList(value)
+    }
+}
+
 impl<'a> StyleList<'a> {
     pub fn missing_param(&self) -> Option<&Style<'_>> {
         self.iter().find(|&f| f.missing_param())
