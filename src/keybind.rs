@@ -41,7 +41,6 @@ impl<'a> fmt::Display for Action<'a> {
     }
 }
 
-
 impl<'a> Keybinds<'a> {
     pub fn get_bind_for(&self, letter: &str) -> Option<&Keybind<'_>> {
         self.0.iter().find(|c| c.key == letter)
@@ -55,5 +54,3 @@ impl <'a> fmt::Display for Keybinds<'a> {
         })
     }
 }
-
-

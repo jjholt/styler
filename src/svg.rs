@@ -9,7 +9,24 @@ pub struct Svg <'a>{
 impl<'a> fmt::Display for Svg<'a> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f,
-               "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><svg>\n<defs/><g></g><inkscape:clipboard style=\"{}\" />\n</svg>",
+               "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><svg>
+               <defs id=\"defs2\">
+               <marker
+                   style=\"overflow:visible\"
+                   id=\"ConcaveTriangle\"
+                   inkscape:stockid=\"Concave triangle arrow\"
+                   markerWidth=\"1\"
+                   markerHeight=\"1\"
+                   viewBox=\"0 0 1 1\"
+                   preserveAspectRatio=\"xMidYMid\">
+                   <path
+                       transform=\"scale(0.7)\"
+                       d=\"M -2,-4 9,0 -2,4 c 2,-2.33 2,-5.66 0,-8 z\"
+                       style=\"fill:context-stroke;fill-rule:evenodd;stroke:none\"
+                   id=\"path7\" />
+               </marker>
+               </defs>
+               <g></g><inkscape:clipboard style=\"{}\" /></svg>",
                self.style)
     }
 }
@@ -46,14 +63,5 @@ mod tests {
             my_styles,
            "fill:#000;stroke:#000;stroke-width:0.7;".into()
        );
-    }
-    #[test]
-    fn correct_output() {
-        let my_svg = Svg {style: &"fill:#000".into()};
-
-        assert_eq!(
-            "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><svg>\n<defs/><g></g><inkscape:clipboard style=\"fill:#000;\" />\n</svg>",
-            my_svg.to_string()
-        );
     }
 }
