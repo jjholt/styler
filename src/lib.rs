@@ -8,6 +8,7 @@ pub use crate::svg::Svg;
 mod tests {
     use super::keybind::{
         Keybind,
+        Keybinds,
         Action::{Style, Rebind}
     };
 
@@ -38,5 +39,12 @@ mod tests {
         ];
         let keybind_from_yaml: Vec<Keybind> = serde_yaml::from_str(TEST_COMBINED).unwrap();
         assert_eq!(keybinds, keybind_from_yaml);
+    }
+    #[test]
+    fn reads_config_file() {
+        let s = &std::fs::read_to_string("config.yaml").unwrap();
+        println!("{}", s);
+        let keybinds: Keybinds = serde_yaml::from_str(s).unwrap();
+        println!("{:#?}", keybinds);
     }
 }
